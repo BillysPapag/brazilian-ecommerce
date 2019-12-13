@@ -82,6 +82,16 @@ sale_dates <- orders %>%
   summarize(nsales_each_day =n()) %>%
   arrange(-nsales_each_day)
 head(sale_dates, n=1)
+
+or 
+
+orders$order_purchase_timestamp=ymd_hms(orders$order_approved_at)
+orders%>%
+  mutate(y=year(order_approved_at), m=month(order_approved_at), d=day(order_approved_at)%>%
+  group_by(y,m,d)%>%
+  summarize(nsales_each_day = n()) %>%
+  arrange(-nsales_each_day)
+  slice(1)
 ```
 
 
